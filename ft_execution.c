@@ -12,64 +12,51 @@
 
 #include "ft_minishell.h"
 
-int				ft_find(char **envp, char *word)
+char		*ft_read_dir(char *path, char **command, char **envp, char *c_path)
 {
-	int i;
+	DIR				*dir;
+	struct dirent	*entry;
 
-	i = 0;
-	while (envp[i])
+	if ((dir = opendir(path)) != NULL)
 	{
-		if (ft_strnequ(envp[i], word, ft_strlen(word)) == 1)
-			return (1);
-		i++;
+		while ((entry = readdir(dir)) != NULL)
+		{
+			if (!(ft_strcmp(entry->d_name, command[0])))
+			{
+				c_path = ft_strjoin(path, "/");
+				c_path = ft_strncat(c_path, entry->d_name, ft_strlen(entry->d_name));
+				execve(c_path, command, envp);
+			}
+		}
+		closedir(dir);
 	}
-	return (0);
+	return (c_path);
 }
 
-char			*ft_join_f(char *s1, char *s2)
+void		ft_exec_sys(char **path, char **command, char **envp)
 {
-	char	*tmp;
-
-	if (!(tmp = ft_strjoin(s1, s2)))
-		return (NULL);
-	free(s2);
-	return (tmp);
-}
-
-char			*ft_join_f2(char *s1, char *s2)
-{
-	char	*tmp;
-
-	if (!(tmp = ft_strjoin(s1, s2)))
-		return (NULL);
-	free(s1);
-	return (tmp);
-}
-
-int				len_env(char **envp)
-{
-	int i;
+	int		i;
+	char	*c_path;
 
 	i = 0;
-	while (envp[i])
-		i++;
-	return (i);
-}
-
-size_t			word_count(char const *s, char c)
-{
-	size_t i;
-	size_t wd;
-
-	i = 0;
-	wd = 0;
-	while (s[i])
+	c_path = NULL;
+	if (ft_if_path(command) == 1)
 	{
-		if (s[i] != c)	
-			wd++;
-		while (s[i] != c && s[i + 1])
+		if (execve(command[0], command, envp) == -1)
+		{
+			ft_putstr_fd("minishell: permission denied: ", 2);
+			ft_putstr_fd(command[0], 2);
+			ft_putchar_fd('\n', 2);
+		}
+	}
+	else
+	{
+		while (path[i])
+		{
+			c_path = ft_read_dir(path[i], command, envp, c_path);
 			i++;
-		i++;
+		}
+		if (c_path == NULL)
+			ft_command_not_found(command[0]);
 	}
-	return (wd);
 }

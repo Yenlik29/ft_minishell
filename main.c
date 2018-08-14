@@ -33,12 +33,10 @@ int				main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		display_prompt();
-		//signal(SIGINT, sighandler);
+		signal(SIGINT, sighandler);
 		w_splited = read_line(env);
-		// if (ret != 1 && w_splited != NULL)
-		// {
-		// 	env = ft_core(w_splited, env, sign);
-		// }
+		if (w_splited != NULL)
+			env = ft_core(w_splited, env);
 	}
 	argv = NULL;
 	argc = 0;

@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
-//
-#include <string.h>
 
 char		**ft_word(char **word, char **env)
 {

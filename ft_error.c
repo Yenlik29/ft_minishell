@@ -12,64 +12,14 @@
 
 #include "ft_minishell.h"
 
-int				ft_find(char **envp, char *word)
+void			ft_parse_error(void)
 {
-	int i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strnequ(envp[i], word, ft_strlen(word)) == 1)
-			return (1);
-		i++;
-	}
-	return (0);
+	ft_putstr_fd("minishell: parse error \\n\n", 2);
 }
 
-char			*ft_join_f(char *s1, char *s2)
+void				ft_command_not_found(char *command)
 {
-	char	*tmp;
-
-	if (!(tmp = ft_strjoin(s1, s2)))
-		return (NULL);
-	free(s2);
-	return (tmp);
-}
-
-char			*ft_join_f2(char *s1, char *s2)
-{
-	char	*tmp;
-
-	if (!(tmp = ft_strjoin(s1, s2)))
-		return (NULL);
-	free(s1);
-	return (tmp);
-}
-
-int				len_env(char **envp)
-{
-	int i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	return (i);
-}
-
-size_t			word_count(char const *s, char c)
-{
-	size_t i;
-	size_t wd;
-
-	i = 0;
-	wd = 0;
-	while (s[i])
-	{
-		if (s[i] != c)	
-			wd++;
-		while (s[i] != c && s[i + 1])
-			i++;
-		i++;
-	}
-	return (wd);
+	ft_putstr_fd("minishell: command not found: ", 2);
+	ft_putstr_fd(command, 2);
+	ft_putchar_fd('\n', 2);
 }

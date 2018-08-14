@@ -12,64 +12,19 @@
 
 #include "ft_minishell.h"
 
-int				ft_find(char **envp, char *word)
+char			**ft_exec_buil_in(char **w_splited, char **envp)
 {
-	int i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strnequ(envp[i], word, ft_strlen(word)) == 1)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char			*ft_join_f(char *s1, char *s2)
-{
-	char	*tmp;
-
-	if (!(tmp = ft_strjoin(s1, s2)))
-		return (NULL);
-	free(s2);
-	return (tmp);
-}
-
-char			*ft_join_f2(char *s1, char *s2)
-{
-	char	*tmp;
-
-	if (!(tmp = ft_strjoin(s1, s2)))
-		return (NULL);
-	free(s1);
-	return (tmp);
-}
-
-int				len_env(char **envp)
-{
-	int i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	return (i);
-}
-
-size_t			word_count(char const *s, char c)
-{
-	size_t i;
-	size_t wd;
-
-	i = 0;
-	wd = 0;
-	while (s[i])
-	{
-		if (s[i] != c)	
-			wd++;
-		while (s[i] != c && s[i + 1])
-			i++;
-		i++;
-	}
-	return (wd);
+	if (!(ft_strcmp(w_splited[0], "cd")))
+		envp = ft_cd(w_splited, envp);
+	// if (!(ft_strcmp(w_splited[0], "setenv")))
+	// 	envp = ft_setenv(w_splited, envp);
+	// if (!(ft_strcmp(w_splited[0], "unsetenv")))
+	// 	envp = ft_unsetenv(w_splited, envp);
+	// if (!(ft_strcmp(w_splited[0], "env")))
+	// 	ft_env(w_splited, envp);
+	// if (!(ft_strcmp(w_splited[0], "echo")))
+	// 	ft_echo(w_splited, envp);
+	if (!(ft_strcmp(w_splited[0], "exit")))
+		exit(0);
+	return (envp);
 }

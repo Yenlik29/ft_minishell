@@ -14,7 +14,7 @@ NAME := minishell
 
 FLAGS := -Wall -Wextra -Werror
 
-SOURCES := main.c ft_env1.c ft_display.c ft_line.c ft_symbols.c ft_actions.c
+SOURCES := main.c ft_env1.c ft_display.c ft_line.c ft_symbols.c ft_actions.c ft_error.c ft_core.c ft_free.c ft_build_in.c ft_cd.c ft_path.c ft_execution.c ft_cd2.c
 
 OBJ := $(SOURCES:.c=.o)
 

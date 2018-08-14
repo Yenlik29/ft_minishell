@@ -12,27 +12,6 @@
 
 #include "ft_minishell.h"
 
-// void			ft_dollar_c(char **env, char **word, int *count, char **home)
-// {
-// 	int		i;
-// 	char	*var;
-
-// 	i = 0;
-// 	var = ft_strdup(ft_strchr(*word, '$') + 1);
-// 	while (env[i])
-// 	{
-// 		if (ft_strnequ(env[i], var, ft_strlen(var)) == 1)
-// 		{
-// 			count++;
-// 			*word = ft_dollar_1(*word, env[i]);
-// 		}
-// 		if (ft_strnequ(env[i], "HOME", ft_strlen("HOME")) == 1)
-// 			*home = ft_strdup(ft_strchr(env[i], '=') + 1);
-// 		i++;
-// 	}
-// 	(var != NULL) ? free(var) : NULL;
-// }
-
 char			*ft_home(char **env)
 {
 	char	*home;
@@ -47,7 +26,7 @@ char			*ft_home(char **env)
 			home = ft_strcpy(home, ft_strchr(env[i], '=') + 1);
 		i++;
 	}
-	if (home == NULL)
+	if (home[0] == '\0')
 		ft_bzero(home, ft_strlen(home));
 	return (home);
 }
@@ -66,63 +45,29 @@ char			*ft_environments(char *word, char **new, char **env)
 		while (env[j])
 		{
 			if (ft_strnequ(new[i], env[j], ft_strlen(new[i])) == 1)
-			{
 				temp = ft_join_f2(temp, ft_strchr(env[j], '=') + 1);
-			}
 			j++;
 		}
 		if (!(ft_strcmp(new[i], "$")))
 			temp = ft_join_f2(temp, "$");
+		if (!(ft_strcmp(new[i], "<")) || !(ft_strcmp(new[i], ">")))
+			ft_parse_error();
 		i++;
 	}
-	printf("->%s\n", temp);
-	// while (env[i])
-	// {
-	// 	j = 0;
-	// 	while (new[j])
-	// 	{
-	// 		if (ft_strnequ(env[i], new[j], ft_strlen(new[j])) == 1)
-	// 		{
-	// 			temp = ft_join_f2(temp, ft_strchr(env[i], '=') + 1);
-	// 		}
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
-	if (temp != NULL)
-		free(temp);
+	word = ft_strcpy(word, temp);
+	(temp != NULL) ? free(temp) : NULL;
 	return (word);
 }
 
 char			*ft_dollar(char **env, char *word)
 {
-	char	*home;
 	int		i;
-	int		count;
 	char	**new;
 
 	i = 0;
-	count = 0;
-	home = NULL;
-	home = ft_home(env);
 	new = str_split(word, '$');
-	while (new[i])
-	{
-		printf("->%s\n", new[i]);
-		i++;
-	}
 	ft_bzero(word, ft_strlen(word));
 	word = ft_environments(word, new, env);
-	//ft_dollar_c(env, &word, &count, &home);
-	// if (count == 0 && (word[1] != '<' && word[1] != '>'))
-	// {
-	// 	*sign = 0;
-	// 	if (home != NULL)
-	// 	{
-	// 		env = ft_new_envp(word, env, flag);
-	// 	}
-	// }
-	// (home != NULL) ? free(home) : NULL;
 	return (word);
 }
 

@@ -12,64 +12,33 @@
 
 #include "ft_minishell.h"
 
-int				ft_find(char **envp, char *word)
+char			**ft_path(char **env)
+{
+	char	*path;
+	char	**path_del;
+	int		i;
+
+	i = 0;
+	while (env[i])
+	{
+		if ((ft_strnequ(env[i], "PATH", 4)) == 1)
+			path = ft_strsub(env[i], 5, ft_strlen(env[i]));
+		i++;
+	}
+	path_del = str_split(path, ':');
+	return (path_del);
+}
+
+int				ft_if_path(char **command)
 {
 	int i;
 
 	i = 0;
-	while (envp[i])
+	while (command[0][i])
 	{
-		if (ft_strnequ(envp[i], word, ft_strlen(word)) == 1)
+		if (command[0][i] == '/')
 			return (1);
 		i++;
 	}
 	return (0);
-}
-
-char			*ft_join_f(char *s1, char *s2)
-{
-	char	*tmp;
-
-	if (!(tmp = ft_strjoin(s1, s2)))
-		return (NULL);
-	free(s2);
-	return (tmp);
-}
-
-char			*ft_join_f2(char *s1, char *s2)
-{
-	char	*tmp;
-
-	if (!(tmp = ft_strjoin(s1, s2)))
-		return (NULL);
-	free(s1);
-	return (tmp);
-}
-
-int				len_env(char **envp)
-{
-	int i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	return (i);
-}
-
-size_t			word_count(char const *s, char c)
-{
-	size_t i;
-	size_t wd;
-
-	i = 0;
-	wd = 0;
-	while (s[i])
-	{
-		if (s[i] != c)	
-			wd++;
-		while (s[i] != c && s[i + 1])
-			i++;
-		i++;
-	}
-	return (wd);
 }
