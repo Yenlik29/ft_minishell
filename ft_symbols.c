@@ -73,23 +73,29 @@ char			*ft_dollar(char **env, char *word)
 
 char		*ft_tilda(char **env, char *word)
 {
-	int i;
-	int	count;
+	int		i;
+	int		count;
+	char	*home;
+	char	*temp;
 
 	i = 0;
 	count = 0;
+	home = NULL;
 	while (env[i])
 	{
 		if (ft_strnequ(env[i], "HOME", ft_strlen("HOME")) == 1)
 		{
 			count++;
-			ft_bzero(word, ft_strlen(word));
-			word = ft_join_f2(word, (ft_strchr(env[i], '=') + 1));
-			return (word);
+			home = ft_strdup(ft_strchr(env[i], '=') + 1);
 		}
 		i++;
 	}
 	if (count == 0)
-		ft_bzero(word, ft_strlen(word));
+	{
+		home = (char *)malloc(sizeof(char) * 1024);
+		ft_bzero(home, ft_strlen(home));
+	}
+	temp = ft_strjoin(home, ft_strchr(word, '~') + 1);
+	word = ft_strcpy(word, temp);
 	return (word);
 }

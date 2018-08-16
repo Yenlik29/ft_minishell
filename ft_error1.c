@@ -12,38 +12,34 @@
 
 #include "ft_minishell.h"
 
-void			ft_env(char **w_splited, char **envp)
+void				ft_illegal_env_opt(char c)
 {
-	int i;
-
-	i = 0;
-	if (len_env(w_splited) == 1)
-	{
-		while (envp[i])
-		{
-			ft_putendl(envp[i]);
-			i++;
-		}
-	}
-	if (len_env(w_splited) > 3)
-		ft_wrong_quantity_env();
-	if (len_env(w_splited) == 2 || len_env(w_splited) == 3)
-		ft_parse_env(w_splited, envp);
+	ft_putstr_fd("env: illegal option -- ", 2);
+	ft_putchar_fd(c, 2);
+	ft_putchar_fd('\n', 2);
+	ft_putstr_fd("usage: env [-u name]\n", 2);
 }
 
-char			**ft_exec_buil_in(char **w_splited, char **envp)
+void				ft_opt_require_arg(char c)
 {
-	if (!(ft_strcmp(w_splited[0], "cd")))
-		envp = ft_cd(w_splited, envp);
-	// if (!(ft_strcmp(w_splited[0], "setenv")))
-	// 	envp = ft_setenv(w_splited, envp);
-	// if (!(ft_strcmp(w_splited[0], "unsetenv")))
-	// 	envp = ft_unsetenv(w_splited, envp);
-	if (!(ft_strcmp(w_splited[0], "env")))
-		ft_env(w_splited, envp);
-	// if (!(ft_strcmp(w_splited[0], "echo")))
-	// 	ft_echo(w_splited, envp);
-	if (!(ft_strcmp(w_splited[0], "exit")))
-		exit(0);
-	return (envp);
+	ft_putstr_fd("env: option requires an argument -- ", 2);
+	ft_putchar_fd(c, 2);
+	ft_putchar_fd('\n', 2);
+}
+
+void				ft_parse_error(void)
+{
+	ft_putstr_fd("minishell: parse error \\n\n", 2);
+}
+
+void				ft_wrong_quantity_env(void)
+{
+	ft_putstr_fd("env: wrong quantyti\n", 2);
+}
+
+void				ft_command_not_found(char *command)
+{
+	ft_putstr_fd("minishell: command not found: ", 2);
+	ft_putstr_fd(command, 2);
+	ft_putchar_fd('\n', 2);
 }

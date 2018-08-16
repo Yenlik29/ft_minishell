@@ -12,6 +12,16 @@
 
 #include "ft_minishell.h"
 
+void			free_3var(char *var1, char *var2, char *var3)
+{
+	if (var1 != NULL)
+		free(var1);
+	if (var2 != NULL)
+		free(var2);
+	if (var3 != NULL)
+		free(var3);
+}
+
 void			free_2var(char *home_path, char *cur_pwd)
 {
 	if (home_path != NULL)

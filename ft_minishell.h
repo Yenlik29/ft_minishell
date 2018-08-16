@@ -62,16 +62,27 @@ int				ft_check_build_in(char **w_splited);
 
 char			**ft_cd(char **w_splited, char **envp);
 char			**ft_only_cd(char **envp);
+char			**ft_cd_one(char *w_splited, char **envp);
 
-char			**ft_change_envp1(char **envp, char *home_path, char *cur_pwd);
+char			**ft_change_envp1(char **envp, char *home_path, char *cur_pwd, char *old_pwd);
+char 			**ft_envp(char **envp, char *home_path, char *pwd);
+void			ft_parse_env(char **w_splited, char **envp);
+void			ft_print_without_env(char *w_splited, char **envp);
+char			**ft_pwd(char **envp, char *word, char *pwd);
 
 int				ft_if_path(char **command);
 char			**ft_path(char **env);
 
 void			ft_parse_error(void);
 void			ft_command_not_found(char *command);
+void			ft_wrong_quantity_env(void);
+void			ft_opt_require_arg(char c);
+void			ft_illegal_env_opt(char c);
+void			ft_no_such_file_env_1(char *w_splited);
+void			ft_permission_env(char *w_splited);
 
 void			free_2darray(char ***str);
 void			free_2var(char *home_path, char *cur_pwd);
+void			free_3var(char *var1, char *var2, char *var3);
 
 #endif
