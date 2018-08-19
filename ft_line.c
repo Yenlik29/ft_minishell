@@ -52,7 +52,6 @@ char			**str_split(char const *s, char c)
 		w[0][1] = '\0';
 		return (w);
 	}
-	printf("%zu\n", word_count(s, c));
 	while (i < word_count(s, c))
 	{
 		j = 0;
@@ -62,6 +61,8 @@ char			**str_split(char const *s, char c)
 			k++;
 		while (s[k] != c && s[k])
 			w[i][j++] = s[k++];
+		while (s[k] == c)
+			k++;
 		if (s[k] == c && s[k + 1] == '\0')
 		{
 			i++;
