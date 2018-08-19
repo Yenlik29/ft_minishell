@@ -31,6 +31,34 @@ char			*ft_home(char **env)
 	return (home);
 }
 
+char			*ft_check(char *sentence, char *word, char c)
+{
+	int	i;
+	int	k;
+
+	i = 0;
+	k = 0;
+	while (word[i])
+	{
+		if (word[i] != c)
+		{
+			sentence[k] = word[i];
+			k++;
+		}
+		while (word[i] == c)
+			i++;
+		if (word[i] != c && word[i - 1] == c)
+		{
+			sentence[k] = ' ';
+			k++;
+			sentence[k] = word[i];
+			k++;
+		}
+		i++;
+	}
+	return (sentence);
+}
+
 char			*ft_environments(char *word, char **new, char **env)
 {
 	char	*temp;
@@ -45,7 +73,10 @@ char			*ft_environments(char *word, char **new, char **env)
 		while (env[j])
 		{
 			if (ft_strnequ(new[i], env[j], ft_strlen(new[i])) == 1)
-				temp = ft_join_f2(temp, ft_strchr(env[j], '=') + 1);
+			{
+				if (((int)ft_strlen(new[i])) == ft_count_before(env[j], '='))
+					temp = ft_join_f2(temp, ft_strchr(env[j], '=') + 1);
+			}
 			j++;
 		}
 		if (!(ft_strcmp(new[i], "$")))

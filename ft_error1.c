@@ -34,7 +34,7 @@ void				ft_parse_error(void)
 
 void				ft_wrong_quantity_env(void)
 {
-	ft_putstr_fd("env: wrong quantyti\n", 2);
+	ft_putstr_fd("env: wrong quantity\n", 2);
 }
 
 void				ft_command_not_found(char *command)

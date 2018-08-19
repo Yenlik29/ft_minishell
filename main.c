@@ -27,16 +27,18 @@ int				main(int argc, char **argv, char **envp)
 	char	**env;
 	char	**w_splited;
 
-	w_splited = NULL;
 	env = (char **)malloc(sizeof(char *) * 1024);
 	env = envp_create(env, envp);
 	while (42)
 	{
+		w_splited = NULL;
 		display_prompt();
 		signal(SIGINT, sighandler);
 		w_splited = read_line(env);
-		if (w_splited != NULL)
+		if (w_splited[0] != NULL)
 			env = ft_core(w_splited, env);
+		if (w_splited[0] != NULL)
+			free_2darray(&w_splited);
 	}
 	argv = NULL;
 	argc = 0;

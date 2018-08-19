@@ -12,6 +12,50 @@
 
 #include "ft_minishell.h"
 
+char		*ft_pwd0(char **envp, char *pwd)
+{
+	int		i;
+	int		flag;
+	char	*buf;
+
+	i = 0;
+	flag = 0;
+	buf = NULL;
+	while (envp[i])
+	{
+		if ((ft_strnequ(envp[i], "HOME", 4)) == 1)
+		{
+			flag = 1;
+			pwd = ft_strdup(ft_strchr(envp[i], '=') + 1);
+		}
+		i++;
+	}
+	if (flag == 0)
+		pwd = ft_join_f("", getcwd(buf, 1024));
+	return (pwd);
+}
+
+char		*ft_look(char **envp, char *pwd, char *find)
+{
+	int i;
+	int	flag;
+
+	i = 0;
+	flag = 0;
+	while (envp[i])
+	{
+		if (ft_strnequ(envp[i], find, ft_strlen(find)))
+		{
+			flag = 1;
+			pwd = ft_strdup(ft_strchr(envp[i], '=') + 1);
+		}
+		i++;
+	}
+	if (flag == 0)
+		ft_not_set(find);
+	return (pwd);
+}
+
 char 		**ft_envp(char **envp, char *home_path, char *pwd)
 {
 	int 	i;

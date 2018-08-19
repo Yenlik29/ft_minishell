@@ -52,6 +52,7 @@ char			**str_split(char const *s, char c)
 		w[0][1] = '\0';
 		return (w);
 	}
+	printf("%zu\n", word_count(s, c));
 	while (i < word_count(s, c))
 	{
 		j = 0;
@@ -80,9 +81,14 @@ char			**str_split(char const *s, char c)
 
 char			**split_word(char *word)
 {
-	char **command;
+	char	**command;
+	char	*sentence;
 
-	command = str_split(word, ' ');
+	sentence = NULL;
+	command = NULL;
+	sentence = (char *)malloc(sizeof(char) * 4096);
+	sentence = ft_check(sentence, word, '\t');
+	command = str_split(sentence, ' ');
 	return (command);
 }
 
