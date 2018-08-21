@@ -26,6 +26,7 @@ char			**ft_path(char **env)
 		i++;
 	}
 	path_del = str_split(path, ':');
+	(path != NULL) ? free(path) : NULL;
 	return (path_del);
 }
 

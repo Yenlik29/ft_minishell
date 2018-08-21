@@ -12,7 +12,7 @@
 
 #include "ft_minishell.h"
 
-char		*ft_read_dir(char *path, char **command, char **envp, char *c_path)
+char		*ft_read_dir(char *path, char **command, char **envp, char *c_p)
 {
 	DIR				*dir;
 	struct dirent	*entry;
@@ -23,14 +23,14 @@ char		*ft_read_dir(char *path, char **command, char **envp, char *c_path)
 		{
 			if (!(ft_strcmp(entry->d_name, command[0])))
 			{
-				c_path = ft_strjoin(path, "/");
-				c_path = ft_strncat(c_path, entry->d_name, ft_strlen(entry->d_name));
-				execve(c_path, command, envp);
+				c_p = ft_strjoin(path, "/");
+				c_p = ft_strncat(c_p, entry->d_name, ft_strlen(entry->d_name));
+				execve(c_p, command, envp);
 			}
 		}
 		closedir(dir);
 	}
-	return (c_path);
+	return (c_p);
 }
 
 void		ft_exec_sys(char **path, char **command, char **envp)
@@ -59,4 +59,5 @@ void		ft_exec_sys(char **path, char **command, char **envp)
 		if (c_path == NULL)
 			ft_command_not_found(command[0]);
 	}
+	(c_path != NULL) ? free(c_path) : NULL;
 }

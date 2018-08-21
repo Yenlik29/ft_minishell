@@ -12,7 +12,7 @@
 
 #include "ft_minishell.h"
 
-char			**ft_pwd(char **envp, char *word , char *pwd)
+char			**ft_pwd(char **envp, char *word, char *pwd)
 {
 	envp[len_env(envp)] = ft_strjoin(word, pwd);
 	return (envp);

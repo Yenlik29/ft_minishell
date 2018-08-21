@@ -56,6 +56,7 @@ char			*ft_check(char *sentence, char *word, char c)
 		}
 		i++;
 	}
+	sentence[k] = '\0';
 	return (sentence);
 }
 
@@ -65,25 +66,23 @@ char			*ft_environments(char *word, char **new, char **env)
 	int		i;
 	int		j;
 
-	i = 0;
+	i = -1;
 	temp = ft_strnew(1);
-	while (new[i])
+	while (new[++i])
 	{
-		j = 0;
-		while (env[j])
+		j = -1;
+		while (env[++j])
 		{
 			if (ft_strnequ(new[i], env[j], ft_strlen(new[i])) == 1)
 			{
 				if (((int)ft_strlen(new[i])) == ft_count_before(env[j], '='))
 					temp = ft_join_f2(temp, ft_strchr(env[j], '=') + 1);
 			}
-			j++;
 		}
 		if (!(ft_strcmp(new[i], "$")))
 			temp = ft_join_f2(temp, "$");
 		if (!(ft_strcmp(new[i], "<")) || !(ft_strcmp(new[i], ">")))
 			ft_parse_error();
-		i++;
 	}
 	word = ft_strcpy(word, temp);
 	(temp != NULL) ? free(temp) : NULL;
@@ -99,10 +98,11 @@ char			*ft_dollar(char **env, char *word)
 	new = str_split(word, '$');
 	ft_bzero(word, ft_strlen(word));
 	word = ft_environments(word, new, env);
+	free_2darray(&new);
 	return (word);
 }
 
-char		*ft_tilda(char **env, char *word)
+char			*ft_tilda(char **env, char *word)
 {
 	int		i;
 	int		count;
@@ -122,11 +122,10 @@ char		*ft_tilda(char **env, char *word)
 		i++;
 	}
 	if (count == 0)
-	{
 		home = (char *)malloc(sizeof(char) * 1024);
-		ft_bzero(home, ft_strlen(home));
-	}
 	temp = ft_strjoin(home, ft_strchr(word, '~') + 1);
 	word = ft_strcpy(word, temp);
+	(home != NULL) ? free(home) : NULL;
+	(temp != NULL) ? free(temp) : NULL;
 	return (word);
 }

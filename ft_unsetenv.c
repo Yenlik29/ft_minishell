@@ -21,7 +21,8 @@ char			**ft_new_envp1(char **new_envp, char **envp, char *w_splited)
 	k = 0;
 	while (envp[j])
 	{
-		if ((ft_strnequ(envp[j], w_splited, ft_strlen(w_splited))) == 1 && ((int)ft_strlen(w_splited) == ft_count_before(envp[j], '=')))
+		if ((ft_strnequ(envp[j], w_splited, ft_strlen(w_splited))) == 1 &&
+			((int)ft_strlen(w_splited) == ft_count_before(envp[j], '=')))
 			j++;
 		else
 		{

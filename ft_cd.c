@@ -43,15 +43,20 @@ int				ft_parsed_cd(char *w_splited)
 char			**ft_chdir(char **envp, char *w_splited, char *pwd)
 {
 	char	*buf;
+	char	*temp;
 
 	buf = NULL;
+	temp = NULL;
 	if (chdir(w_splited) != 0)
 	{
 		ft_putstr_fd("chdir() failed\n", 2);
 		return (envp);
 	}
-	w_splited = ft_strcpy(w_splited, ft_join_f("", getcwd(buf, 1024)));
+	ft_bzero(w_splited, ft_strlen(w_splited));
+	temp = ft_join_f("", getcwd(buf, 1024));
+	w_splited = ft_strcpy(w_splited, temp);
 	envp = ft_envp(envp, w_splited, pwd);
+	(temp != NULL) ? free(temp) : NULL;
 	return (envp);
 }
 
@@ -64,9 +69,8 @@ char			**ft_cd_one(char *w_splited, char **envp)
 	buf = NULL;
 	pwd = NULL;
 	old_pwd = ft_join_f("", getcwd(buf, 1024));
-	if ((w_splited[0] == '\0') || (w_splited[0] == '-' && w_splited[1] == '-' &&
-	ft_strlen(w_splited) == 2))
-		pwd = ft_pwd0(envp, pwd);
+	((w_splited[0] == '\0') || (w_splited[0] == '-' && w_splited[1] == '-' &&
+	ft_strlen(w_splited) == 2)) ? pwd = ft_pwd0(envp, pwd) : NULL;
 	if (!(w_splited[0] == '-' && ft_strlen(w_splited) == 1) &&
 	(!(w_splited[0] == '-' && w_splited[1] == '-' &&
 	ft_strlen(w_splited) == 2)))
@@ -74,13 +78,14 @@ char			**ft_cd_one(char *w_splited, char **envp)
 		if (ft_parsed_cd(w_splited) == 1)
 		{
 			envp = ft_chdir(envp, w_splited, old_pwd);
+			free_2var(pwd, old_pwd);
 			return (envp);
 		}
 	}
 	if (w_splited[0] == '-' && ft_strlen(w_splited) == 1)
 		pwd = ft_look(envp, pwd, "OLDPWD");
-	if (pwd != NULL)
-		envp = ft_chdir(envp, pwd, old_pwd);
+	(pwd != NULL) ? envp = ft_chdir(envp, pwd, old_pwd) : NULL;
+	free_2var(pwd, old_pwd);
 	return (envp);
 }
 
@@ -100,6 +105,7 @@ char			**ft_only_cd(char **envp)
 	if (chdir(home_path) != 0)
 	{
 		ft_putstr_fd("chdir() failed\n", 2);
+		free_3var(home_path, cur_pwd, old_pwd);
 		return (envp);
 	}
 	cur_pwd = ft_join_f("", getcwd(buf, 1024));
@@ -110,10 +116,8 @@ char			**ft_only_cd(char **envp)
 
 char			**ft_cd(char **w_splited, char **envp)
 {
-	char	*buf;
 	int		len;
 
-	buf = NULL;
 	len = len_env(w_splited);
 	if (len == 2)
 		envp = ft_cd_one(w_splited[1], envp);

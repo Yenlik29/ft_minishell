@@ -33,7 +33,7 @@ all: $(NAME)
 $(NAME): $(LIBFT) $(OBJ)
 	@gcc $(FLAGS) -o $(NAME) $(SOURCES) -lft -L $(LIBFT_DIR)
 
-$(OBJ_DIR)%.o: %c. ft_minishell.h
+%.o: %.c ft_minishell.h
 	@$(CC) -c $< -o $@ $(FLAGS) $(HEADER_FLAGS)
 
 $(LIBFT):

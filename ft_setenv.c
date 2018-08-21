@@ -51,8 +51,7 @@ char			**ft_setenv_work(char *w_splited, char **envp)
 		envp = ft_edit_envp(new, w_splited, envp);
 	else
 		envp = ft_new_envp(envp, w_splited);
-	if (new != NULL)
-		free(new);
+	(new != NULL) ? free(new) : NULL;
 	return (envp);
 }
 

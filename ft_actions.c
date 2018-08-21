@@ -65,7 +65,7 @@ size_t			word_count(char const *s, char c)
 	wd = 0;
 	while (s[i])
 	{
-		if (s[i] != c)	
+		if (s[i] != c)
 			wd++;
 		while (s[i] != c && s[i + 1])
 			i++;

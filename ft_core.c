@@ -45,13 +45,14 @@ void		ft_available_command(char **command, char **envp)
 
 	path = NULL;
 	if ((ft_if_path(command)) == 0)
-		path = ft_path(envp); 
+		path = ft_path(envp);
 	else
 	{
 		path = (char **)malloc(sizeof(char *) * 100);
 		path = envp_create(path, command);
 	}
 	ft_exec_sys(path, command, envp);
+	free_2darray(&path);
 }
 
 char		**ft_commands(char **w_splited, char **envp)
@@ -70,6 +71,7 @@ char		**ft_commands(char **w_splited, char **envp)
 		if (child_pid == 0)
 		{
 			ft_available_command(w_splited, envp);
+			free_2darray(&w_splited);
 			exit(0);
 		}
 		else
@@ -78,10 +80,8 @@ char		**ft_commands(char **w_splited, char **envp)
 	return (envp);
 }
 
-char			**ft_core(char **w_splited, char **env)
+char		**ft_core(char **w_splited, char **env)
 {
 	env = ft_commands(w_splited, env);
-	if (w_splited != NULL)
-		free_2darray(&w_splited);
 	return (env);
 }

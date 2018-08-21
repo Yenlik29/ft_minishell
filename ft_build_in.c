@@ -31,7 +31,6 @@ void			ft_env(char **w_splited, char **envp)
 		ft_parse_env(w_splited, envp);
 }
 
-
 void			ft_putnstr(char *str, int n)
 {
 	int		i;
@@ -74,23 +73,28 @@ void			ft_echo(char **w_splited)
 {
 	int		i;
 	int		n;
+	int		q;
 
-	n = 0;
+	ft_default(&n, &q, &i);
 	if (!w_splited[1])
 	{
 		write(1, "\n", 1);
 		return ;
 	}
-	else if (w_splited[1][0] == '-' && w_splited[1][1] == 'n' && w_splited[1][2] == '\0')
+	else if (w_splited[1][0] == '-' &&
+		w_splited[1][1] == 'n' && w_splited[1][2] == '\0')
 		n = 1;
-	i = 0;
-	if (n)
-		++i;
-	while (w_splited[++i])
+	q = ft_quote_len(w_splited);
+	(n) ? ++i : i;
+	(q != 2 && q != 0) ? ft_quote_error(q) : NULL;
+	if ((q == 2 || q == 0) || n == 1)
 	{
-		echo(w_splited, i);
-		if (!w_splited[i + 1] && !n)
-			ft_putchar('\n');
+		while (w_splited[++i])
+		{
+			echo(w_splited, i);
+			if (!w_splited[i + 1] && !n)
+				ft_putchar('\n');
+		}
 	}
 }
 

@@ -26,10 +26,8 @@ int				ft_splited_parse(char **w_splited)
 	return (1);
 }
 
-void			ft_free_not_cwd(char *temp, char *w_splited)
+void			ft_free_not_cwd(char *w_splited)
 {
-	if (temp != NULL)
-		free(temp);
 	ft_not_in_cwd(w_splited);
 }
 
@@ -45,12 +43,16 @@ int				ft_parsed_cd2(char **w_splited)
 	temp = ft_join_f("", getcwd(buf, 1024));
 	if (ft_strcmp(temp, w_splited[1]))
 	{
-		ft_free_not_cwd(temp, w_splited[1]);
+		ft_free_not_cwd(w_splited[1]);
+		(temp != NULL) ? free(temp) : NULL;
 		return (0);
 	}
 	ret = ft_splited_parse(w_splited);
 	if (ret == 0)
+	{
+		(temp != NULL) ? free(temp) : NULL;
 		return (0);
+	}
 	(temp != NULL) ? free(temp) : NULL;
 	return (1);
 }
