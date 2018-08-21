@@ -41,9 +41,10 @@ char			**ft_unsetenv_work(char *w_splited, char **envp)
 	char	**new_envp;
 
 	i = 0;
-	new_envp = (char **)malloc(sizeof(char *) * 4096);
+	new_envp = (char **)malloc(sizeof(char *) * 1024);
 	new_envp = ft_new_envp1(new_envp, envp, w_splited);
-	free_2darray(&envp);
+	if (new_envp[0] != NULL)
+		free_2darray(&envp);
 	envp = (char **)malloc(sizeof(char *) * 1024);
 	while (new_envp[i])
 	{
@@ -51,7 +52,8 @@ char			**ft_unsetenv_work(char *w_splited, char **envp)
 		i++;
 	}
 	envp[i] = NULL;
-	free_2darray(&new_envp);
+	if (new_envp[0] != NULL)
+		free_2darray(&new_envp);
 	return (envp);
 }
 

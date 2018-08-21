@@ -67,7 +67,7 @@ char			*ft_environments(char *word, char **new, char **env)
 	int		j;
 
 	i = -1;
-	temp = ft_strnew(1);
+	temp = ft_strnew(1024);
 	while (new[++i])
 	{
 		j = -1;
@@ -98,7 +98,8 @@ char			*ft_dollar(char **env, char *word)
 	new = str_split(word, '$');
 	ft_bzero(word, ft_strlen(word));
 	word = ft_environments(word, new, env);
-	free_2darray(&new);
+	if (new[0] != NULL)
+		free_2darray(&new);
 	return (word);
 }
 

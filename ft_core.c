@@ -71,7 +71,6 @@ char		**ft_commands(char **w_splited, char **envp)
 		if (child_pid == 0)
 		{
 			ft_available_command(w_splited, envp);
-			free_2darray(&w_splited);
 			exit(0);
 		}
 		else

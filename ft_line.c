@@ -43,7 +43,7 @@ char			**str_split(char *s, char c)
 
 	i = -1;
 	k = 0;
-	if (!s || !(w = (char **)malloc(sizeof(char *) * 4096)))
+	if (!s || !(w = (char **)malloc(sizeof(char *) * 1024)))
 		return (NULL);
 	if (s[0] == c && !s[k + 1])
 	{
@@ -70,17 +70,16 @@ char			**split_word(char *word)
 	return (command);
 }
 
-char			**read_line(char **env)
+char			**read_line(char **env, char **w_splited)
 {
 	char			ch;
 	ssize_t			ret;
 	char			*word;
 	int				i;
-	char			**w_splited;
 
 	i = 0;
 	ret = 0;
-	word = ft_strnew(0);
+	word = ft_strnew(4096);
 	while ((ret = read(0, &ch, 1) && ch != '\n') > 0)
 		word = ft_strncat(word, &ch, 1);
 	w_splited = split_word(word);

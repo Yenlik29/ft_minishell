@@ -21,7 +21,7 @@ char				**str_split1(char **w, char *s, char c, size_t i)
 	while (++i < word_count(s, c))
 	{
 		j = 0;
-		w[i] = ft_strnew(4096);
+		w[i] = ft_strnew(1024);
 		while (s[k] == c && s[k + 1])
 			k++;
 		while (s[k] != c && s[k])
@@ -31,7 +31,7 @@ char				**str_split1(char **w, char *s, char c, size_t i)
 		if (s[k] == c && s[k + 1] == '\0')
 		{
 			j = 0;
-			w[i++] = ft_strnew(4096);
+			w[i++] = ft_strnew(1024);
 			w[i][j++] = c;
 			k++;
 		}

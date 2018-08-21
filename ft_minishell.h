@@ -104,7 +104,7 @@ char		**ft_word(char **word, char **env);
 char		**parsed_word(char **word, char **env);
 char		**str_split(char *s, char c);
 char		**split_word(char *word);
-char		**read_line(char **env);
+char		**read_line(char **env, char **w_splited);
 
 char		**ft_path(char **env);
 int			ft_if_path(char **command);
