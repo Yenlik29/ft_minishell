@@ -98,10 +98,14 @@ char			**ft_only_cd(char **envp)
 
 	buf = NULL;
 	cur_pwd = NULL;
-	home_path = ft_home(envp);
+	home_path = (char *)malloc(sizeof(char) * 1024);
+	home_path = ft_home(envp, home_path);
 	old_pwd = ft_join_f("", getcwd(buf, 1024));
 	if (home_path[0] == '\0')
-		home_path = ft_join_f("", getcwd(buf, 1024));
+	{
+		free(home_path);
+		home_path = getcwd(buf, 1024);
+	}
 	if (chdir(home_path) != 0)
 	{
 		ft_putstr_fd("chdir() failed\n", 2);

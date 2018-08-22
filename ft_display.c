@@ -18,9 +18,16 @@ char			*ft_change(char *str, char *join, char *home_path)
 
 	temp = NULL;
 	temp = ft_strjoin(join, home_path);
-	str = ft_strcpy(str, temp);
+	ft_strdel(&str);
+	str = ft_strdup(temp);
 	(temp != NULL) ? free(temp) : NULL;
 	return (str);
+}
+
+void			ft_default2(int *var1, int *var2)
+{
+	*var1 = 0;
+	*var2 = 0;
 }
 
 void			ft_default(int *i, int *flag1, int *flag2)

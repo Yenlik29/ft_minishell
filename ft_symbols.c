@@ -12,22 +12,21 @@
 
 #include "ft_minishell.h"
 
-char			*ft_home(char **env)
+char			*ft_home(char **env, char *home)
 {
-	char	*home;
 	int		i;
 
 	i = 0;
-	if (!(home = (char *)malloc(sizeof(char) * 1024)))
-		return (NULL);
 	while (env[i])
 	{
 		if (ft_strnequ(env[i], "HOME", ft_strlen("HOME")) == 1)
+		{
 			home = ft_strcpy(home, ft_strchr(env[i], '=') + 1);
+			return (home);
+		}
 		i++;
 	}
-	if (home[0] == '\0')
-		ft_bzero(home, ft_strlen(home));
+	ft_bzero(home, ft_strlen(home));
 	return (home);
 }
 
@@ -110,9 +109,8 @@ char			*ft_tilda(char **env, char *word)
 	char	*home;
 	char	*temp;
 
-	i = 0;
-	count = 0;
-	home = NULL;
+	ft_default2(&i, &count);
+	temp = NULL;
 	while (env[i])
 	{
 		if (ft_strnequ(env[i], "HOME", ft_strlen("HOME")) == 1)
@@ -123,10 +121,12 @@ char			*ft_tilda(char **env, char *word)
 		i++;
 	}
 	if (count == 0)
+	{
 		home = (char *)malloc(sizeof(char) * 1024);
+		ft_bzero(home, ft_strlen(home));
+	}
 	temp = ft_strjoin(home, ft_strchr(word, '~') + 1);
 	word = ft_strcpy(word, temp);
-	(home != NULL) ? free(home) : NULL;
-	(temp != NULL) ? free(temp) : NULL;
+	free_2var(home, temp);
 	return (word);
 }

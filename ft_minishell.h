@@ -60,6 +60,7 @@ char		**ft_commands(char **w_splited, char **envp);
 char		**ft_core(char **w_splited, char **env);
 
 char		*ft_change(char *str, char *join, char *home_path);
+void		ft_default2(int *var1, int *var2);
 void		ft_default(int *i, int *flag1, int *flag2);
 int			ft_quote_len(char **w_splited);
 void		display_prompt(void);
@@ -115,7 +116,7 @@ int			ft_parse_name(char *name, char **envp);
 int			ft_parse_setenv(char *w_splited);
 char		**ft_setenv(char **w_splited, char **envp);
 
-char		*ft_home(char **env);
+char		*ft_home(char **env, char *home_path);
 char		*ft_check(char *sentence, char *word, char c);
 char		*ft_environments(char *word, char **new, char **env);
 char		*ft_dollar(char **env, char *word);

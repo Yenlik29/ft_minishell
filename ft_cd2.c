@@ -65,12 +65,14 @@ char		**ft_envp(char **envp, char *home_path, char *pwd)
 	ft_default(&i, &flag1, &flag2);
 	while (envp[i])
 	{
-		if (ft_strnequ(envp[i], "PWD", ft_strlen("PWD")) == 1)
+		if ((ft_strnequ(envp[i], "PWD", ft_strlen("PWD")) == 1) &&
+			((int)ft_strlen("PWD") == ft_count_before(envp[i], '=')))
 		{
 			flag1 = 1;
 			envp[i] = ft_change(envp[i], "PWD=", home_path);
 		}
-		if (ft_strnequ(envp[i], "OLDPWD", ft_strlen("OLDPWD")) == 1)
+		if ((ft_strnequ(envp[i], "OLDPWD", ft_strlen("OLDPWD")) == 1) &&
+			((int)ft_strlen("OLDPWD") == ft_count_before(envp[i], '=')))
 		{
 			flag2 = 1;
 			envp[i] = ft_change(envp[i], "OLDPWD=", pwd);
@@ -79,17 +81,15 @@ char		**ft_envp(char **envp, char *home_path, char *pwd)
 	}
 	(flag1 == 0) ? envp = ft_pwd(envp, "PWD=", home_path) : NULL;
 	(flag2 == 0) ? envp = ft_pwd(envp, "OLDPWD=", pwd) : NULL;
+	envp[len_env(envp)] = NULL;
 	return (envp);
 }
 
 char		**ft_change_envp1(char **envp, char *home, char *cur, char *old)
 {
 	int		ret;
-	int		j;
-	char	*buf;
 
-	j = 0;
-	buf = NULL;
+	ret = 0;
 	ret = ft_find(envp, "HOME");
 	if (ret == 1)
 		envp = ft_envp(envp, home, old);
