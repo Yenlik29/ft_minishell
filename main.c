@@ -36,9 +36,7 @@ int				main(int argc, char **argv, char **envp)
 		signal(SIGINT, sighandler);
 		w_splited = read_line(env, w_splited);
 		if (w_splited[0] != NULL)
-		{
 			env = ft_core(w_splited, env);
-		}
 		free_2darray(&w_splited);
 	}
 	argv = NULL;
